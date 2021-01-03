@@ -1,16 +1,17 @@
 <template>
-<welcome />
+<CreateQueryName />
 </template>
 
 /******************************************************************************/
 
 <script>
-import Welcome from '@/components/Welcome.vue'
+// import Welcome from '@/components/Welcome.vue'
+import CreateQueryName from '@/components/CreateQueryName.vue'
 
 export default {
   name: 'Home',
   components: {
-    Welcome
+    CreateQueryName
   }
 }
 </script>
