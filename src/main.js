@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import router from './plugins/router';
-import App from './App.vue';
-import store from '@/plugins/store.js'
+import router from '@/core/router';
+import store from '@/core/store';
+import App from '@/App.vue';
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('Running in development mode!');
