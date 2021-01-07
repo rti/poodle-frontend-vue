@@ -7,7 +7,7 @@
       <div class="level is-mobile px-2 py-2">
         <div class="level-left">
           <a href="/">
-            <h1 class="level-item title">vue2-webpack4-bulma-frontend</h1>
+            <h1 class="level-item title">Poodle</h1>
           </a>
         </div>
         <div class="level-right">

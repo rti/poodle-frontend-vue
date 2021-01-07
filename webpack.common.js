@@ -61,7 +61,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'vue2-webpack4-bulma-frontend',
+      title: 'Poodle',
       template: path.resolve(__dirname, 'src/index.html'),
       favicon: path.resolve(__dirname, 'src/assets/favicon.ico'),
     }),
