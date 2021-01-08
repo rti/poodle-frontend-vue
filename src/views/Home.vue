@@ -1,17 +1,19 @@
 <template>
-<CreateQueryName />
+<div>
+  <QueryCreate />
+  <!-- <CreateQueryOptions /> -->
+</div>
 </template>
 
-/******************************************************************************/
+/CreateQueryName******************************************************************************/
 
 <script>
-// import Welcome from '@/components/Welcome.vue'
-import CreateQueryName from '@/components/CreateQueryName.vue'
+import QueryCreate from '@/components/QueryCreate.vue';
 
 export default {
   name: 'Home',
   components: {
-    CreateQueryName
+    QueryCreate,
   }
 }
 </script>
