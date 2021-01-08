@@ -4,15 +4,15 @@
     <label v-if="label" class="label">{{ label }}</label>
 
     <p class="control is-medium has-icons-right"
-        v-bind:class="{ 'is-loading': processing }">
+        v-bind:class="{ 'is-loading': state == State.processing }">
 
       <input type="text"
           class="input is-medium"
-          v-bind:class="{ 'is-danger': error }"
+          v-bind:class="{ 'is-danger': state == State.error }"
           :placeholder="placeholder"
           @input="handleInput" />
 
-      <span v-if="done" class="icon is-right">
+      <span v-if="state == State.done" class="icon is-right">
       <!-- TODO we could use a slot here -->
         OK
       </span>
@@ -20,8 +20,10 @@
     </p>
 
     <div class="help-container">
-      <span v-if="done && successMsg" class="help is-success">{{ successMsg }}</span>
-      <span v-if="error && errorMsg" class="help is-danger">{{ errorMsg }}</span>
+      <span v-if="state == State.done && successMsg"
+          class="help is-success">{{ successMsg }}</span>
+      <span v-if="state == State.error && errorMsg"
+          class="help is-danger">{{ errorMsg }}</span>
     </div>
 
   </div>
@@ -31,6 +33,14 @@
 /******************************************************************************/
 
 <script>
+
+const StateEnum = {
+  idle: 1,
+  processing: 2,
+  done: 3,
+  error: 4,
+};
+
 export default {
   name: 'InputTextVerbose',
   props: {
@@ -54,9 +64,8 @@ export default {
 
   data() {
     return {
-      processing: false,
-      done: false,
-      error: false,
+      State: StateEnum,
+      state: StateEnum.idle,
       errorMsg: '',
       timeout: undefined,
     }
@@ -66,10 +75,8 @@ export default {
     handleInput(e) {
       let value = e.target.value;
 
-      this.done = false;
-      this.error = false;
+      this.state = StateEnum.idle;
       this.errorMsg = '';
-      this.processing = false;
 
       if(!this.processFunc) {
         return;
@@ -80,26 +87,22 @@ export default {
       }
 
       if(this.required && !value) {
-        this.error = true;
+        this.state = StateEnum.error;
         this.errorMsg = this.requiredMsg;
         return;
       }
 
-      this.processing = true;
+      this.state = StateEnum.processing;
 
       this.timeout = setTimeout(async () => {
           try {
             await this.processFunc(value);
-            this.done = true;
+            this.state = StateEnum.done;
           }
           catch(e) {
-            this.error = true;
+            this.state = StateEnum.error;
             this.errorMsg = e;
-            console.log(e);
           }
-
-          this.processing = false;
-
       }, this.debounce);
     }
   }
