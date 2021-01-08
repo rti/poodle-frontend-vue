@@ -110,4 +110,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style.scss";
+
+.help-container {
+  padding-top: 0.2em;
+  min-height: 1.7em;
+}
 </style>
