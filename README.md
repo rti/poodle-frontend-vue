@@ -1,8 +1,9 @@
-# poodle-frontend-vue
+# <img src="src/assets/logo.svg" height="140px" /> <img src="src/assets/textlogo.svg" height="140px" />
 
 Poodle is a scheduling tool.
 
 This repository contains the SPA frontend implemented in vue.
+
 
 ## Based on
 
