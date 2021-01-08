@@ -7,10 +7,6 @@ const store = {
   state: {
     query: {
       name: {
-        value: '',
-        loading: '',
-        saved: '',
-        timeout: undefined,
         abortController: undefined,
       },
     },
@@ -20,72 +16,54 @@ const store = {
     query: undefined,
   },
 
-  setQueryName(v){
+  async setQueryName(value){
     if(this.debug){
-      console.log('setQueryName ', v);
+      console.log('setQueryName ', value);
     }
 
     let stateName = this.state.query.name;
 
-    stateName.value = v;
-    stateName.saved = false;
-
-    if(!v.length) {
+    if(!value.length) {
       return;
     }
 
-    stateName.loading = true;
-
-    clearTimeout(stateName.timeout);
-    
     if(stateName.abortController) {
       stateName.abortController.abort();
     }
 
-    stateName.timeout = setTimeout(() => {
-      let httpMethod;
-      let url;
-      if(this.apiState.query) {
-        httpMethod = 'PATCH';
-        url = queryUrl + this.apiState.query.id + '/';
-      }
-      else {
-        httpMethod = 'POST';
-        url = queryUrl;
-      }
+    let httpMethod;
+    let url;
 
-      if(this.debug) {
-        console.log('starting ' + httpMethod + ' request to ' + url);
-      }
+    if(this.apiState.query) {
+      httpMethod = 'PATCH';
+      url = queryUrl + this.apiState.query.id + '/';
+    }
+    else {
+      httpMethod = 'POST';
+      url = queryUrl;
+    }
 
-      stateName.abortController = new AbortController();
+    if(this.debug) {
+      console.log('starting ' + httpMethod + ' request to ' + url);
+    }
 
-      fetch(url, { 
-          method: httpMethod,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 'name': stateName.value }),
-          signal: stateName.abortController.signal })
+    stateName.abortController = new AbortController();
 
-      .then((res) => {
-        if (!res.ok) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
+    const res = await fetch(url, {
+        method: httpMethod,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'name': value }),
+        signal: stateName.abortController.signal });
 
-      .then((data) => {
-        this.apiState.query = data;
-        stateName.saved = true; 
-        console.log(data);
-      })
+    if(!res.ok) {
+      throw Error(res.statusText);
+    }
 
-      .catch((e) => {
-        console.log('error ' + e);
-      });
+    const json = await res.json();
 
-      stateName.loading = false;
+    console.log(json);
 
-    }, 200);
+    this.apiState.query = json;
   }
 }
 
