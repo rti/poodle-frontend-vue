@@ -23,7 +23,7 @@
   </div>
 
   <!-- Hero content: will be in the middle -->
-  <div class="hero-body is-fullheight-with-navbar">
+  <div class="hero-body is-fullheight-with-navbar is-align-items-start">
     <div class="container">
       <router-view></router-view>
     </div>
