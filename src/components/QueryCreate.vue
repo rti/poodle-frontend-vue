@@ -4,7 +4,7 @@
     <InputTextVerbose
         required="true"
         label="What are you planning?"
-        placeholder="e.g. Remote Family Dinner"
+        placeholder="e.g. remote family dinner"
         success-msg="Cool, this looks good."
         required-msg="You really need to provide a name here."
         :initialValue="restoredName"
