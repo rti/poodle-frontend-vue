@@ -22,6 +22,11 @@
 import InputTextVerbose from '@/components/InputTextVerbose.vue';
 import backend from '@/core/backend.js';
 
+const StateEnum = {
+  idle: 1,
+  restoring: 2,
+};
+
 export default {
   name: 'QueryCreate',
 
@@ -33,6 +38,8 @@ export default {
     return {
       query: null,
       restoredName: null,
+      State: StateEnum,
+      state: StateEnum.idle,
     }
   },
 
@@ -40,8 +47,10 @@ export default {
     let query_id = this.$cookies.get('QueryCreate_unfinished_query_id');
 
     if(query_id) {
+      this.state = StateEnum.restoring;
       this.query = await backend.getQuery(query_id);
       this.restoredName = this.query.name;
+      this.state = StateEnum.idle;
     }
   },
 
