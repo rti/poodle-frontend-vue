@@ -13,8 +13,7 @@
           />
 
       <span v-if="state == State.done" class="icon is-right">
-      <!-- TODO we could use a slot here -->
-        OK
+        <i class="mdi mdi-check"></i>
       </span>
 
     </p>
