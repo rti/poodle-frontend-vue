@@ -7,6 +7,7 @@
         placeholder="e.g. remote family dinner"
         success-msg="Cool, this looks good."
         required-msg="You really need to provide a name here."
+        :disabled="state == State.restoring"
         :initialValue="restoredName"
         :process-func="processNameChange" />
 

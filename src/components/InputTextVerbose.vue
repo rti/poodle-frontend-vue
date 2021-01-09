@@ -10,7 +10,7 @@
           class="input is-medium"
           v-model="value"
           v-bind:class="{ 'is-danger': state == State.error }"
-          :placeholder="placeholder"
+          v-bind="$attrs"
           />
 
       <span v-if="state == State.done" class="icon is-right">
@@ -48,7 +48,6 @@ export default {
   props: {
     label: String,
     initialValue: String,
-    placeholder: String,
     successMsg: String,
     required: {
       type: String, // so we do not need to use v-bind to force bool
