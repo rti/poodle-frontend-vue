@@ -8,6 +8,7 @@
 
       <input type="text"
           class="input is-medium"
+          :value="value"
           v-bind:class="{ 'is-danger': state == State.error }"
           :placeholder="placeholder"
           @input="handleInput" />
@@ -45,6 +46,7 @@ export default {
   name: 'InputTextVerbose',
   props: {
     label: String,
+    initialValue: String,
     placeholder: String,
     successMsg: String,
     required: {
@@ -64,6 +66,7 @@ export default {
 
   data() {
     return {
+      value: '',
       State: StateEnum,
       state: StateEnum.idle,
       errorMsg: '',
@@ -71,9 +74,15 @@ export default {
     }
   },
 
+  watch: {
+    initialValue: function () {
+      this.value = this.initialValue;
+    }
+  },
+
   methods: {
     handleInput(e) {
-      let value = e.target.value;
+      this.value = e.target.value;
 
       this.state = StateEnum.idle;
       this.errorMsg = '';
@@ -86,7 +95,7 @@ export default {
         clearTimeout(this.timeout);
       }
 
-      if(this.required && !value) {
+      if(this.required && !this.value) {
         this.state = StateEnum.error;
         this.errorMsg = this.requiredMsg;
         return;
@@ -96,7 +105,7 @@ export default {
 
       this.timeout = setTimeout(async () => {
           try {
-            await this.processFunc(value);
+            await this.processFunc(this.value);
             this.state = StateEnum.done;
           }
           catch(e) {

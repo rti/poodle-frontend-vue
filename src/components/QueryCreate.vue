@@ -6,6 +6,7 @@
         required="true"
         success-msg="Cool, this looks good."
         required-msg="You really need to provide a name here."
+        :initialValue="restoredName"
         :process-func="processNameChange" />
 
   </div>
@@ -27,12 +28,23 @@ export default {
   data() {
     return {
       query: null,
+      restoredName: null,
+    }
+  },
+
+  async created() {
+    let query_id = this.$cookies.get('QueryCreate_unfinished_query_id');
+
+    if(query_id) {
+      this.query = await backend.getQuery(query_id);
+      this.restoredName = this.query.name;
     }
   },
 
   methods: {
     async processNameChange(value) {
       this.query = await backend.setQueryName(value, this.query);
+      this.$cookies.set('QueryCreate_unfinished_query_id', this.query.id);
     },
   },
 }
