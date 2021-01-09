@@ -15,21 +15,24 @@
 
 <script>
 import InputTextVerbose from '@/components/InputTextVerbose.vue';
+import backend from '@/core/backend.js';
 
 export default {
   name: 'QueryCreate',
+
   components: {
     InputTextVerbose,
   },
 
   data() {
     return {
-      queryName: this.$store.state.query.name,
+      query: null,
     }
   },
+
   methods: {
     async processNameChange(value) {
-        await this.$store.setQueryName(value);
+      this.query = await backend.setQueryName(value, this.query);
     },
   },
 }
