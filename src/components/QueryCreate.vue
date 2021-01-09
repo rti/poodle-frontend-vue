@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="title">Schedule a new event</h1>
+
     <InputTextVerbose
         required="true"
         label="What are you planning?"
@@ -9,7 +10,8 @@
         required-msg="You really need to provide a name here."
         :disabled="state == State.restoring"
         :initialValue="restoredName"
-        :process-func="processNameChange" />
+        :process-func="processNameChange"
+        />
 
   </div>
 </template>

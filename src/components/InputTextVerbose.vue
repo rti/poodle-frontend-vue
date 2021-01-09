@@ -6,8 +6,7 @@
     <p class="control is-medium has-icons-right"
         v-bind:class="{ 'is-loading': state == State.processing }">
 
-      <input type="text"
-          class="input is-medium"
+      <input type="text" class="input is-medium"
           v-model="value"
           v-bind:class="{ 'is-danger': state == State.error }"
           v-bind="$attrs"
@@ -119,7 +118,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/style.scss";
 
-.help-container {
+.field .help-container {
   padding-top: 0.2em;
   min-height: 1.7em;
 }
