@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1 class="title">Create a query</h1>
+    <h1 class="title">Schedule a new event</h1>
     <InputTextVerbose
         required="true"
-        label="Give it a name"
+        label="What are you planning?"
         placeholder="e.g. Remote Family Dinner"
         success-msg="Cool, this looks good."
         required-msg="You really need to provide a name here."
