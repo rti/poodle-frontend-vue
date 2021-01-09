@@ -8,10 +8,10 @@
 
       <input type="text"
           class="input is-medium"
-          :value="value"
+          v-model="value"
           v-bind:class="{ 'is-danger': state == State.error }"
           :placeholder="placeholder"
-          @input="handleInput" />
+          />
 
       <span v-if="state == State.done" class="icon is-right">
       <!-- TODO we could use a slot here -->
@@ -44,6 +44,7 @@ const StateEnum = {
 
 export default {
   name: 'InputTextVerbose',
+
   props: {
     label: String,
     initialValue: String,
@@ -77,13 +78,9 @@ export default {
   watch: {
     initialValue: function () {
       this.value = this.initialValue;
-    }
-  },
+    },
 
-  methods: {
-    handleInput(e) {
-      this.value = e.target.value;
-
+    value: function () {
       this.state = StateEnum.idle;
       this.errorMsg = '';
 
@@ -114,7 +111,7 @@ export default {
           }
       }, this.debounce);
     }
-  }
+  },
 };
 </script>
 
