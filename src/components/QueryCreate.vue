@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">Schedule a new event</h1>
+    <div class="title">Schedule a new event</div>
 
     <InputTextVerbose
         required="true"
