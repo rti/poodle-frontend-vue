@@ -1,7 +1,12 @@
 import Vue from 'vue';
-import router from '@/core/router';
-import cookie from '@/core/cookies';
+
+import router from '@/plugin/router';
+import cookie from '@/plugin/cookies';
+import buefy from '@/plugin/buefy';
+import mdifont from '@/plugin/mdifont';
+
 import store from '@/core/store';
+
 import App from '@/App.vue';
 
 if (process.env.NODE_ENV !== 'production') {
