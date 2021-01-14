@@ -19,8 +19,8 @@
 /******************************************************************************/
 
 <script>
-import InputTextVerbose from '@/components/InputTextVerbose.vue';
-import backend from '@/core/backend.js';
+import InputTextVerbose from '../components/InputTextVerbose.vue';
+import backend from '../core/backend.js';
 
 const StateEnum = {
   idle: 1,

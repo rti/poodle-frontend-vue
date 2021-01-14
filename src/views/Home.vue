@@ -8,7 +8,7 @@
 /******************************************************************************/
 
 <script>
-import QueryCreate from '@/components/QueryCreate.vue';
+import QueryCreate from '../components/QueryCreate.vue';
 
 export default {
   name: 'Home',
