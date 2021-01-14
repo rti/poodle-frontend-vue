@@ -56,4 +56,8 @@ export default {};
 .router-link-exact-active {
   @extend .is-primary;
 }
+
+a.logo {
+  text-decoration: none;
+}
 </style>
