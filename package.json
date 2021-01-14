@@ -1,6 +1,6 @@
 {
-  "name": "Poodle",
-  "description": "An opinionated project template for creating vue based frontends",
+  "name": "poodle",
+  "description": "Scheduling tool SPA frontend",
   "private": "true",
   "version": "0.1.0",
   "author": "Robert Timm <mail@rtti.de>",
