@@ -169,18 +169,18 @@ fi
 # ----
 # Merge platform overrides.
 
-if [[ $init = 1 ]] || [[ $merge = 1 ]] ; then
-	message_info "Merging Android platform customizations..."
-	cp -R platform-merges/android/* platforms/android/
+# if [[ $init = 1 ]] || [[ $merge = 1 ]] ; then
+	# message_info "Merging Android platform customizations..."
+	# cp -R platform-merges/android/* platforms/android/
 
 	# message_info "Merging iOS platform customizations..."
 	# cp -R platform-merges/ios/* platforms/ios/
-fi
+# fi
 
 # ----
 # Copy App Icons and Splash Screen Images
 
-if [[ $init = 1 ]] || [[ $icons = 1 ]] ; then
+# if [[ $init = 1 ]] || [[ $icons = 1 ]] ; then
 	# This would probably be better if we parsed www/config.xml,
 	# but for now we know the files and where they need to go.
 
@@ -210,12 +210,12 @@ if [[ $init = 1 ]] || [[ $icons = 1 ]] ; then
 	# cp www/res/screen/ios/screen-ipad-portrait-2x.png platforms/ios/Project/Resources/splash/Default-Portrait@2x~ipad.png
 	# cp www/res/screen/ios/screen-ipad-landscape.png platforms/ios/Project/Resources/splash/Default-Landscape~ipad.png
 	# cp www/res/screen/ios/screen-ipad-landscape-2x.png platforms/ios/Project/Resources/splash/Default-Landscape@2x~ipad.png
-fi
+# fi
 
 # ----
 # Add Plugins
 
-if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
+# if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
 
 	# message_info "Adding Device Plugin..."
 	# cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
@@ -229,7 +229,7 @@ if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
 	# message_info "Adding Splashscreen Plugin..."
 	# cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-splashscreen.git
 
-fi
+# fi
 
 # ----
 # Prepare Platforms
