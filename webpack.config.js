@@ -105,6 +105,7 @@ module.exports = (env, argv) => {
 
     devServer: {
       port: 9000,
+      host: '0.0.0.0',
       compress: true,
       historyApiFallback: true,
       contentBase: path.resolve(__dirname, './dist'),
