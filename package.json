@@ -29,6 +29,7 @@
     "vue-router": "^3.4.9"
   },
   "devDependencies": {
+    "@appcominteractive/cordova-plugin-hot-reload": "^0.2.3",
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
     "@fullhuman/postcss-purgecss": "^3.0.0",
@@ -58,7 +59,8 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "@appcominteractive/cordova-plugin-hot-reload": {}
     },
     "platforms": [
       "android"
