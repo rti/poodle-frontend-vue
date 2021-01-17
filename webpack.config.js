@@ -7,13 +7,29 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HotModuleReplacementPlugin = require('webpack').HotModuleReplacementPlugin;
+const DefinePlugin = require('webpack').DefinePlugin;
 
 
 module.exports = (env, argv) => {
 
   let devMode = (argv.mode === 'development');
 
+  let buildSettings = {
+    production: !devMode,
+    cordova: process.env.CORDOVA === 'true',
+    contentMode: process.env.CONTENT_MODE,
+  }
+
+  console.log('POODLE BUILD SETTINGS');
+  console.log('  production  : ' + buildSettings.production);
+  console.log('  cordova     : ' + buildSettings.cordova);
+
   let plugins = [
+    new DefinePlugin({
+      PRODUCTION: JSON.stringify(buildSettings.production),
+      CORDOVA: JSON.stringify(buildSettings.cordova),
+    }),
+
     new HtmlWebpackPlugin({
       title: 'Poodle',
       template: path.resolve(__dirname, 'src/index.html'),

@@ -13,15 +13,19 @@
   "scripts": {
     "test": "echo No tests yet. && exit 1",
     "setup": "yarn && ./cordova-project.sh",
-    "dev": "webpack serve --mode development --progress",
-    "analyze": "webpack --analyze --mode production --progress",
-    "build": "webpack --mode production --progress",
-    "build-dev": "webpack --mode development --progress",
-    "build-android": "yarn build && CONTENT_MODE=remote cordova build android",
-    "run-android-local": "yarn build && CONTENT_MODE=local cordova build android && cordova run android",
-    "run-android-dev": "CONTENT_MODE=remote concurrently \"yarn dev\" \"cordova build && cordova run android\"",
-    "serve": "serve -l 9000 -s dist",
-    "purge": "purgecss -o dist --css dist/*css --content dist/*js"
+    "web-plain-build-dev": "webpack --mode development --progress",
+    "web-plain-run-dev": "webpack serve --mode development --progress",
+    "web-plain-build-prod": "webpack --mode production --progress",
+    "web-plain-analyze-prod": "webpack --analyze --mode production --progress",
+    "web-plain-serve": "serve -l 9000 -s dist",
+    "web-plain-purgecss": "purgecss -o dist --css dist/*css --content dist/*js",
+    "web-cordova-build-dev": "CORDOVA=true webpack --mode development --progress",
+    "web-cordova-run-dev": "CORDOVA=true webpack serve --mode development --progress",
+    "android-build-dev-remote": "yarn web-cordova-build-dev && CONTENT_MODE=remote cordova build android",
+    "android-build-dev-local": "yarn web-cordova-build-dev && CONTENT_MODE=local cordova build android",
+    "android-run-dev-remote": "concurrently \"yarn web-cordova-run-dev\" \"CONTENT_MODE=remote cordova build android && CONTENT_MODE=remote cordova run android\"",
+    "android-run-dev-local": "yarn android-build-dev-local && CONTENT_MODE=local cordova build android && CONTENT_MODE=local cordova run android",
+    "android-clean": "cordova clean"
   },
   "dependencies": {
     "@mdi/font": "^5.8.55",

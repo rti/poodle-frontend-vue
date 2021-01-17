@@ -12,6 +12,10 @@ import App from './App.vue';
 
 // Vue.prototype.$store = store;
 
+console.log('poodle starting up...');
+console.log('  production:   ' + PRODUCTION);
+console.log('  cordova:      ' + CORDOVA);
+
 new Vue({
   el: '#app',
   router: router,
