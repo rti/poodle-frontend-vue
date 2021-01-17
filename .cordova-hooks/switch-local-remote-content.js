@@ -59,10 +59,7 @@ function configLocalContent(json) {
 }
 
 module.exports = async function (context) {
-  const port = process.env.PORT;
-  if(!port) {
-    throw Error('environment variable PORT must be set.');
-  }
+  const port = 9000;
 
   const contentMode = process.env.CONTENT_MODE;
   if(!port || !contentMode) {
