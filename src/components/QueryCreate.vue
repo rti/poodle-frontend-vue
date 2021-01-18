@@ -1,7 +1,5 @@
 <template>
   <div>
-    <div class="title">Schedule a new event</div>
-
     <InputTextVerbose
         required="true"
         label="What are you planning?"
@@ -12,7 +10,6 @@
         :initialValue="restoredName"
         :process-func="processNameChange"
         />
-
   </div>
 </template>
 

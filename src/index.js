@@ -2,8 +2,7 @@ import Vue from 'vue';
 
 import router from './plugin/router.js';
 import cookie from './plugin/cookies.js';
-import bulma from './plugin/bulma.js';
-import buefy from './plugin/buefy.js';
+import vuetify from './plugin/vuetify.js';
 import mdifont from './plugin/mdifont.js';
 
 // import store from './core/store.js';
@@ -31,6 +30,7 @@ if(CORDOVA) {
 
 new Vue({
   el: '#app',
-  router: router,
+  router,
+  vuetify,
   render: (h) => h(App),
 });

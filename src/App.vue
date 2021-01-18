@@ -1,36 +1,68 @@
 <template>
-<section class="hero is-fullheight is-light">
 
-  <!-- Hero head: will stick at the top -->
-  <div class="hero-head">
-    <div class="container">
-      <div class="level is-mobile px-2 py-2">
-        <div class="level-left">
-          <a class="logo" href="/">
-            <img src="./assets/logo.svg" width="100px" />
-            <img src="./assets/textlogo.svg" width="210px" />
-          </a>
-        </div>
-        <div class="level-right">
-          <router-link class="router-link level-item" to="/">
-            Home
-          </router-link>
-          <router-link class="router-link level-item" to="/about">
-            About
-          </router-link>
-        </div>
-      </div>
-    </div>
-  </div>
+<v-app>
+  <v-navigation-drawer app>
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="title">
+          <img src="./assets/logo.svg" width="80px" />
+          <img src="./assets/textlogo.svg" width="120px" />
+        </v-list-item-title>
+        <!-- <v&#45;list&#45;item&#45;subtitle> -->
+        <!--   subtext -->
+        <!-- </v&#45;list&#45;item&#45;subtitle> -->
+      </v-list-item-content>
+    </v-list-item>
 
-  <!-- Hero content: will be in the middle -->
-  <div class="hero-body is-fullheight-with-navbar is-align-items-start">
-    <div class="container">
+    <v-divider></v-divider>
+
+    <v-list dense nav >
+      <router-link to="/" class="router-link">
+        <v-list-item link >
+          <v-list-item-icon>
+            <v-icon>mdi-plus</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>
+              Schedule Event
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
+
+      <router-link to="/about" class="router-link">
+        <v-list-item link >
+          <v-list-item-icon>
+            <v-icon>mdi-information</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>
+              About
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
+    </v-list>
+
+  </v-navigation-drawer>
+
+  <!-- <v&#45;app&#45;bar app> -->
+  <!--   <!&#45;&#45; &#45;&#45;> -->
+  <!-- </v&#45;app&#45;bar> -->
+
+  <v-main>
+    <v-container fluid>
       <router-view></router-view>
-    </div>
-  </div>
+    </v-container>
+  </v-main>
 
-</section>
+  <!-- <v&#45;footer app> -->
+  <!--   <!&#45;&#45; &#45;&#45;> -->
+  <!-- </v&#45;footer> -->
+</v-app>
+
 </template>
 
 /******************************************************************************/
@@ -44,20 +76,13 @@ export default {};
 
 <style lang="scss" scoped>
 @import "style.scss";
-
 .router-link {
-  @extend .button;
-}
-
-.router-link:not(.router-link-exact-active) {
-
-}
-
-.router-link-exact-active {
-  @extend .is-primary;
-}
-
-a.logo {
   text-decoration: none;
 }
+
+/* .router-link:not(.router-link-exact-active) { } */
+/* .router-link-exact-active { }  */
+/* a.logo { */
+/*   text-decoration: none; */
+/* } */
 </style>

@@ -8,7 +8,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HotModuleReplacementPlugin = require('webpack').HotModuleReplacementPlugin;
 const DefinePlugin = require('webpack').DefinePlugin;
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
+const VuetifyLoaderPlugin = require('vuetify-loader').VuetifyLoaderPlugin;
 
 module.exports = (env, argv) => {
 
@@ -44,6 +45,12 @@ module.exports = (env, argv) => {
 
     new VueLoaderPlugin(),
 
+    new VuetifyLoaderPlugin({
+      progressiveImages: {
+        sharp: true,
+      }
+    }),
+
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
     }),
@@ -57,10 +64,10 @@ module.exports = (env, argv) => {
     patterns = [ { from: 'src/cordova.css' }, ];
 
     if(buildSettings.contentMode && buildSettings.contentMode == 'remote') {
-      patterns.push({ from: "platforms/android/platform_www/cordova.js" });
-      patterns.push({ from: "platforms/android/platform_www/cordova_plugins.js" });
+      patterns.push({ from: 'platforms/android/platform_www/cordova.js' });
+      patterns.push({ from: 'platforms/android/platform_www/cordova_plugins.js' });
       // TODO: add me as soon as we have platform plugins
-      // patterns.push({ from: "platforms/android/platform_www/plugins" });
+      // patterns.push({ from: 'platforms/android/platform_www/plugins' });
     }
 
     plugins.push(new CopyPlugin({patterns: patterns}));
@@ -88,7 +95,12 @@ module.exports = (env, argv) => {
             buildSettings.production ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader',
             'postcss-loader',
-            'sass-loader'
+            {
+              loader: 'sass-loader',
+              options: {
+                implementation: require('sass'),
+              },
+            },
           ],
         },
 
