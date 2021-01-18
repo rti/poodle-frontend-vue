@@ -20,12 +20,15 @@
     "web-plain-serve": "serve -l 9000 -s dist",
     "web-plain-purgecss": "purgecss -o dist --css dist/*css --content dist/*js",
     "web-cordova-build-dev-local": "CONTENT_MODE=local CORDOVA=true webpack --mode development --progress",
+    "web-cordova-build-prod-local": "CONTENT_MODE=local CORDOVA=true webpack --mode production --progress",
     "web-cordova-build-dev-remote": "CONTENT_MODE=remote CORDOVA=true webpack --mode development --progress",
     "web-cordova-run-dev-remote": "CONTENT_MODE=remote CORDOVA=true webpack serve --mode development --progress",
     "android-build-dev-remote": "yarn web-cordova-build-dev-remote && CONTENT_MODE=remote cordova build android",
     "android-build-dev-local": "yarn web-cordova-build-dev-local && CONTENT_MODE=local cordova build android",
+    "android-build-prod-local": "yarn web-cordova-build-prod-local && CONTENT_MODE=local cordova build android",
     "android-run-dev-remote": "concurrently \"yarn web-cordova-run-dev-remote\" \"CONTENT_MODE=remote cordova build android && CONTENT_MODE=remote cordova run android\"",
     "android-run-dev-local": "yarn android-build-dev-local && CONTENT_MODE=local cordova build android && CONTENT_MODE=local cordova run android",
+    "android-run-prod-local": "yarn android-build-prod-local && CONTENT_MODE=local cordova build android && CONTENT_MODE=local cordova run android",
     "android-clean": "cordova clean"
   },
   "dependencies": {
