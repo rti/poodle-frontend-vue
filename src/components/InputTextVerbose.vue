@@ -1,32 +1,17 @@
 <template>
-  <div class="field">
-
-    <label v-if="label" class="label">{{ label }}</label>
-
-    <p class="control is-medium has-icons-right"
-        v-bind:class="{ 'is-loading': state == State.processing }">
-
-      <input type="text" class="input is-medium"
-          v-model="value"
-          v-bind:class="{ 'is-danger': state == State.error }"
-          v-bind="$attrs"
-          />
-
-      <span v-if="state == State.done" class="icon is-right">
-        <i class="mdi mdi-check"></i>
-      </span>
-
-    </p>
-
-    <div class="help-container">
-      <span v-if="state == State.done && successMsg"
-          class="help is-success">{{ successMsg }}</span>
-      <span v-if="state == State.error && errorMsg"
-          class="help is-danger">{{ errorMsg }}</span>
-    </div>
-
-  </div>
-
+  <!-- TODO why do we need the label when we have v-bind="$attrs"? -->
+  <v-text-field
+    solo
+    v-model="value"
+    v-bind="$attrs"
+    :label="label"
+    :append-icon="state == State.done ? 'mdi-check' : ''"
+    :loading="state == State.processing"
+    :error="state == State.error"
+    :error-messages="state == State.error ? errorMsg : ''"
+    :success="state == State.done"
+    :success-messages="state == State.done ? successMsg : ''"
+    />
 </template>
 
 /******************************************************************************/
