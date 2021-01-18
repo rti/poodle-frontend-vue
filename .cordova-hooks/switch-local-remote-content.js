@@ -4,9 +4,7 @@
 const address = require('address');
 const defaultGateway = require('default-gateway');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
-// const { config } = require('process');
 const xmlToJs = require('xml2js');
 
 function configXmlPath(projectRoot) {
@@ -71,8 +69,6 @@ module.exports = async function (context) {
     throw Error('cannot get project root');
   }
 
-  // update config.xml --------------------------------------------------------
-
   const configPath = configXmlPath(projectRoot);
   const json = await configXmlReadJson(configPath);
 
@@ -96,36 +92,4 @@ module.exports = async function (context) {
   }
 
   configXmlWriteJson(configPath, json);
-
-
-  // manage symlinks ----------------------------------------------------------
-
-  const cordovaFiles = ['cordova.js', 'cordova_plugins.js', 'plugins'];
-
-  if(contentMode === 'local') {
-    cordovaFiles.forEach((filename) => {
-      const symlinkDestPath = path.join(projectRoot, 'www', filename);
-
-      if (fs.existsSync(symlinkDestPath)) {
-        fs.unlinkSync(symlinkDestPath);
-      }
-    });
-  }
-  else if(contentMode === 'remote') {
-    const symlinkType = os.platform() === 'win32' ? 'junction' : 'dir';
-    const platform = context.opts.platforms[0];
-
-    cordovaFiles.forEach((filename) => {
-      const symlinkSrcPath = path.join(
-          projectRoot, 'platforms', platform, 'platform_www', filename);
-
-      if (fs.existsSync(symlinkSrcPath)) {
-        const symlinkDestPath = path.join(projectRoot, 'www', filename);
-        if (fs.existsSync(symlinkDestPath)) {
-          fs.unlinkSync(symlinkDestPath);
-        }
-        fs.symlinkSync(symlinkSrcPath, symlinkDestPath, symlinkType);
-      }
-    });
-  }
 };

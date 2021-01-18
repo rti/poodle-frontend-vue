@@ -8,7 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HotModuleReplacementPlugin = require('webpack').HotModuleReplacementPlugin;
 const DefinePlugin = require('webpack').DefinePlugin;
-
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = (env, argv) => {
 
@@ -23,16 +23,19 @@ module.exports = (env, argv) => {
   console.log('POODLE BUILD SETTINGS');
   console.log('  production  : ' + buildSettings.production);
   console.log('  cordova     : ' + buildSettings.cordova);
+  console.log('  content mode: ' + buildSettings.contentMode);
 
   let plugins = [
     new DefinePlugin({
       PRODUCTION: JSON.stringify(buildSettings.production),
       CORDOVA: JSON.stringify(buildSettings.cordova),
+      CONTENT_MODE: JSON.stringify(buildSettings.contentMode),
     }),
 
     new HtmlWebpackPlugin({
       title: 'Poodle',
-      template: path.resolve(__dirname, 'src/index.html'),
+      template: path.resolve(__dirname, buildSettings.cordova
+          ? 'src/index-cordova.html' : 'src/index-plain.html'),
       favicon: path.resolve(__dirname, 'src/assets/favicon.ico'),
       filename: 'index.html',
     }),
@@ -46,12 +49,25 @@ module.exports = (env, argv) => {
     }),
   ];
 
-  if(devMode) {
+  if(!buildSettings.production) {
     plugins.push(new HotModuleReplacementPlugin());
   }
 
+  if(buildSettings.cordova) {
+    patterns = [ { from: 'src/cordova.css' }, ];
+
+    if(buildSettings.contentMode && buildSettings.contentMode == 'remote') {
+      patterns.push({ from: "platforms/android/platform_www/cordova.js" });
+      patterns.push({ from: "platforms/android/platform_www/cordova_plugins.js" });
+      // TODO: add me as soon as we have platform plugins
+      // patterns.push({ from: "platforms/android/platform_www/plugins" });
+    }
+
+    plugins.push(new CopyPlugin({patterns: patterns}));
+  }
+
   return {
-    target: devMode ? 'web' : undefined,
+    target: buildSettings.production ? undefined : 'web',
 
     module: {
       rules: [
@@ -69,7 +85,7 @@ module.exports = (env, argv) => {
         {
           test: /\.(css|sass|scss)$/,
           use: [
-            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            buildSettings.production ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader',
             'postcss-loader',
             'sass-loader'
@@ -90,9 +106,9 @@ module.exports = (env, argv) => {
 
     plugins: plugins,
 
-    devtool: devMode ? 'eval-source-map' : 'source-map',
+    devtool: buildSettings.production ? 'source-map' : 'eval-source-map',
 
-    optimization: devMode ? {} : {
+    optimization: buildSettings.production ? {
       removeAvailableModules: true,
 
       minimize: true,
@@ -106,17 +122,18 @@ module.exports = (env, argv) => {
           sourceMap: false,
         }),
       ],
-    },
+    } : {},
 
     entry: {
       main: path.resolve(__dirname, 'src/index.js'),
     },
 
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname,
+        buildSettings.contentMode === 'local' ? 'www' : 'dist'),
       filename: '[name].[hash:8].js',
       chunkFilename: '[name].[hash:8].js',
-      publicPath: '/',
+      publicPath: buildSettings.cordova ? '' : '/',
     },
 
     devServer: {
@@ -125,7 +142,7 @@ module.exports = (env, argv) => {
       compress: true,
       historyApiFallback: true,
       contentBase: path.resolve(__dirname, './dist'),
-      hot: devMode ? true : false,
+      hot: buildSettings.production ? false : true,
     },
   };
 }

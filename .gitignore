@@ -9,10 +9,8 @@ node_modules/
 
 # Webpack output
 dist/
+www/
 
 # Yarn
 yarn-error.log
 
-# Cordova js links in remote content mode
-www/cordova.js
-www/cordova_plugins.js
